@@ -7,6 +7,11 @@ This document gives a high-level view of how the project is structured and how i
 
 ---
 
+## Build Instructions
+
+- Build from the repository root with `swift build`.
+- Prefer `swift build --quiet` to reduce noise; only drop `--quiet` when debugging a failure.
+
 ## 1. Purpose and Scope
 
 - Inspect Swift symbols at a given file/line/column.

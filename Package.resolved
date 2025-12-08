@@ -1,6 +1,69 @@
 {
-  "originHash" : "42f780798172f86a7ff362bba306ebff2b9c3fc00a7a5f36a95e1c997664e069",
+  "originHash" : "5e474ba7dec7668e18ab4e2408b6f09b83a1c75ad1f53766678cc23fc9986e13",
   "pins" : [
+    {
+      "identity" : "fseventswrapper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Frizlab/FSEventsWrapper",
+      "state" : {
+        "revision" : "70bbea4b108221fcabfce8dbced8502831c0ae04",
+        "version" : "2.1.0"
+      }
+    },
+    {
+      "identity" : "jsonrpc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChimeHQ/JSONRPC",
+      "state" : {
+        "revision" : "29987f721374f30e686af40ccffd0b13b14dde1f",
+        "version" : "0.9.2"
+      }
+    },
+    {
+      "identity" : "languageclient",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChimeHQ/LanguageClient.git",
+      "state" : {
+        "revision" : "4f28cc3cad7512470275f65ca2048359553a86f5",
+        "version" : "0.8.2"
+      }
+    },
+    {
+      "identity" : "languageserverprotocol",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChimeHQ/LanguageServerProtocol.git",
+      "state" : {
+        "revision" : "f7879c782c0845af9c576de7b8baedd946237286",
+        "version" : "0.14.0"
+      }
+    },
+    {
+      "identity" : "processenv",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChimeHQ/ProcessEnv",
+      "state" : {
+        "revision" : "552f611479a4f28243a1ef2a7376a216d6899f42",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "queue",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattmassicotte/Queue",
+      "state" : {
+        "revision" : "38826d0b8838ce5edcdafa1ffb2f507693d5abcb",
+        "version" : "0.2.2"
+      }
+    },
+    {
+      "identity" : "semaphore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/groue/Semaphore",
+      "state" : {
+        "revision" : "2543679282aa6f6c8ecf2138acd613ed20790bc2",
+        "version" : "0.1.0"
+      }
+    },
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
@@ -8,6 +71,15 @@
       "state" : {
         "revision" : "cdd0ef3755280949551dc26dee5de9ddeda89f54",
         "version" : "1.6.2"
+      }
+    },
+    {
+      "identity" : "swift-glob",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/davbeck/swift-glob",
+      "state" : {
+        "revision" : "07ba6f47d903a0b1b59f12ca70d6de9949b975d6",
+        "version" : "0.2.0"
       }
     }
   ],
