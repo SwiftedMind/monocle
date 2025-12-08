@@ -1,0 +1,114 @@
+--acronyms URL,UUID
+--allman false
+--anonymous-for-each convert
+--asset-literals visual-width
+--async-capturing 
+--before-marks 
+--binary-grouping 4,8
+--call-site-paren default
+--category-mark "MARK: %c"
+--class-threshold 0
+--closing-paren balanced
+--closure-void remove
+--complex-attributes preserve
+--computed-var-attributes preserve
+--conditional-assignment after-property
+--conflict-markers reject
+--date-format system
+--decimal-grouping 3,6
+--doc-comments before-declarations
+--else-position same-line
+--empty-braces no-space
+--enum-namespaces always
+--enum-threshold 0
+--equatable-macro none
+--exponent-case lowercase
+--exponent-grouping disabled
+--extension-acl on-extension
+--extension-mark "MARK: - %t + %c"
+--extension-threshold 0
+--file-macro "#file"
+--fraction-grouping disabled
+--fragment false
+--func-attributes preserve
+--generic-types 
+--group-blank-lines true
+--grouped-extension "MARK: %c"
+--guard-else auto
+--header "// By Dennis Müller"
+--hex-grouping 4,8
+--hex-literal-case uppercase
+--ifdef no-indent
+--import-grouping alpha
+--indent 2
+--indent-case false
+--indent-strings false
+--inferred-types always
+--init-coder-nil false
+--lifecycle 
+--line-after-marks true
+--line-between-guards false
+--linebreaks lf
+--mark-categories true
+--mark-extensions always
+--mark-types always
+--max-width 120
+--modifier-order 
+--never-trailing 
+--nil-init remove
+--no-space-operators 
+--no-wrap-operators 
+--non-complex-attributes 
+--octal-grouping 4,8
+--operator-func spaced
+--organization-mode visibility
+--organize-types actor,class,enum,struct
+--pattern-let hoist
+--preserve-acronyms 
+--preserve-decls 
+--preserved-property-types Package
+--property-types infer-locals-only
+--ranges no-space
+--self remove
+--self-required 
+--semicolons inline
+--short-optionals except-properties
+--single-line-for-each ignore
+--smart-tabs enabled
+--some-any true
+--sort-swiftui-properties none
+--sorted-patterns 
+--stored-var-attributes preserve
+--strip-unused-args always
+--struct-threshold 0
+--tab-width unspecified
+--throw-capturing 
+--timezone system
+--trailing-closures 
+--trailing-commas always
+--trim-whitespace always
+--type-attributes preserve
+--type-blank-lines remove
+--type-delimiter space-after
+--type-mark "MARK: - %t"
+--type-marks 
+--type-order 
+--url-macro none
+--visibility-marks 
+--visibility-order 
+--void-type void
+--wrap-arguments preserve
+--wrap-collections preserve
+--wrap-conditions preserve
+--wrap-effects preserve
+--wrap-enum-cases always
+--wrap-parameters default
+--wrap-return-type preserve
+--wrap-string-interpolation default
+--wrap-ternary default
+--wrap-type-aliases preserve
+--xcode-indentation disabled
+--xctest-symbols 
+--yoda-swap always
+--disable headerFileName,sortDeclarations,strongOutlets,unusedArguments,wrapMultilineStatementBraces
+--enable blankLinesAfterGuardStatements,blankLinesBetweenImports,docComments,isEmpty,preferSwiftTesting,privateStateVariables,wrapEnumCases

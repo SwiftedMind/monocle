@@ -1,14 +1,10 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
-// 
-// Swift Argument Parser
-// https://swiftpackageindex.com/apple/swift-argument-parser/documentation
+// By Dennis Müller
 
 import ArgumentParser
 
 @main
 struct monocle: ParsableCommand {
-    mutating func run() throws {
-        print("Hello, world!")
-    }
+  mutating func run() throws {
+    print("Hello, world!")
+  }
 }
