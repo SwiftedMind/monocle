@@ -91,11 +91,13 @@ monocle --file Sources/App/FooView.swift --line 42 --column 17
 Paste this block into your AGENTS guide so coding agents know how to use monocle:
 
 ```markdown
-## `monocle` cli
-- You have the `monocle` CLI available for read-only Swift symbol inspection.
-- Use `monocle inspect --file <path> --line <line> --column <column> --json` to fetch definition, signature, and docs in one call.
-- Add `--workspace <root>` when the workspace is ambiguous (multiple packages or Xcode projects).
-- monocle is read-only: it never edits source; safe to use in any repository.
+## Symbol Inspection (`monocle` cli)
+
+- Treat the `monocle` cli as your **default tool** for Swift symbol info. 
+  Whenever you need the definition file, signature, parameters, or doc comment for any Swift symbol (type, class, struct, enum, method, property, etc.), call `monocle` rather than guessing or doing project-wide searches.
+- Use this command to resolve a symbol at a specific location: `monocle inspect --file <path> --line <line> --column <column> --json`
+- Line and column values are **1-based**, not 0-based; the column must point inside the identifier
+- Use `monocle` especially for symbols involved in errors/warnings or coming from external package dependencies.
 ```
 
 ### What agents get
@@ -140,11 +142,10 @@ Common options for symbol commands:
 
 Speed up repeated lookups by keeping SourceKit-LSP alive:
 ```bash
-monocle serve --idle-timeout 900
+monocle serve --idle-timeout 600
 ```
 
-- Default socket: `~/Library/Caches/monocle/daemon.sock` (customize with `--socket`)
-- CLI commands automatically connect to the daemon when the socket exists, falling back to a one-shot session if unreachable
+- You do not need to start the daemon manually—running a symbol command such as `monocle inspect` will start it automatically on first use
 - Check status: `monocle status` or `monocle status --json`
 - Stop the daemon: `monocle stop`
 
