@@ -31,7 +31,7 @@ A read-only CLI for Swift symbol lookup via SourceKit-LSP, designed specifically
 
 ### Homebrew (recommended)
 ```bash
-brew install SwiftedMind/tap/monocle
+brew install SwiftedMind/cli/monocle
 ```
 
 ### From source
