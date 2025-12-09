@@ -39,7 +39,7 @@ public actor SourceKitService {
       let workspaceFolder = WorkspaceFolder(uri: rootURL.absoluteString, name: rootURL.lastPathComponent)
       return InitializeParams(
         processId: Int(ProcessInfo.processInfo.processIdentifier),
-        clientInfo: InitializeParams.ClientInfo(name: "monocle", version: MonocleVersion.current),
+        clientInfo: InitializeParams.ClientInfo(name: "monocle", version: toolVersion),
         locale: Locale.current.identifier,
         rootPath: workspace.rootPath,
         rootUri: rootURL.absoluteString,
