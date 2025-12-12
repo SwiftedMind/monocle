@@ -1,7 +1,9 @@
+<img width="100" height="100" alt="monocle Logo" src="https://github.com/user-attachments/assets/a4c576cc-b70b-4708-94d9-abb82f4c863e" />
+
+# monocle
+
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FSwiftedMind%2Fmonocle%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/SwiftedMind/monocle)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FSwiftedMind%2Fmonocle%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/SwiftedMind/monocle)
-
-# 🧐 monocle
 
 A read-only CLI for Swift symbol lookup via SourceKit-LSP, designed specifically for coding agents. Point it at a file, line, and column, and monocle resolves the symbol and returns its definition location, signature, and documentation—perfect for agents that need to understand unfamiliar APIs, including types from external Swift packages, without opening Xcode.
 
