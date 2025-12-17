@@ -1,3 +1,20 @@
+## [1.4.0]
+
+### Added
+- **Force-stop for hung daemons**: `monocle stop` now force-stops unresponsive daemons (and `--force` is available for explicit use).
+- **Daemon PID visibility**: `monocle status` now shows the daemon PID to aid debugging and force-stop workflows.
+- **Dependency type discovery for symbol search**: `monocle symbol` can now surface type declarations from Swift package dependencies when `workspace/symbol` does not return them (checked-out packages + targeted fallback).
+
+### Enhanced
+- **Daemon auto-start resilience**: Auto-start is more robust against stale sockets and unresponsive daemons, and avoids spawning duplicate daemons during concurrent invocations.
+- **More reliable symbol warm-up**: `monocle symbol` retries during initial SourceKit-LSP warm-up so first-run “empty results” are less likely.
+- **Faster repeated dependency searches**: Dependency symbol lookups reuse daemon sessions, improving repeated query performance.
+
+### Fixed
+- **SourceKit-LSP crash recovery**: Monocle now recovers more reliably from crashed/invalid SourceKit-LSP sessions by restarting and reopening documents as needed.
+- **Graceful daemon shutdown reliability**: Daemon shutdown no longer blocks on long-running SourceKit-LSP shutdown sequences, preventing `monocle stop` timeouts.
+- **Xcode `build_root` checkout discovery**: `buildServer.json` setups that point `build_root` at `DerivedData/.../Build` now resolve `SourcePackages/checkouts` correctly.
+
 ## [1.3.0]
 
 ### Added
