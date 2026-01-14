@@ -57,13 +57,14 @@ enum HumanReadablePrinter {
   /// Prints workspace symbol search results.
   ///
   /// - Parameter results: Symbol search results to display.
-  static func printSymbolSearchResults(_ results: [SymbolSearchResult]) {
+  static func printSymbolSearchResults(_ results: [RankedSymbolSearchResult]) {
     guard results.isEmpty == false else {
       print("No symbols found.")
       return
     }
 
-    for (index, result) in results.enumerated() {
+    for (index, ranked) in results.enumerated() {
+      let result = ranked.result
       var header = "[\(index + 1)] \(result.name)"
       if let container = result.containerName {
         header += " (\(container))"
@@ -71,11 +72,17 @@ enum HumanReadablePrinter {
       if let kind = result.kind {
         header += " – \(kind)"
       }
+      if let sourceLabel = sourceLabel(for: ranked.source) {
+        header += " [\(sourceLabel)]"
+      }
       print(header)
 
       if let location = result.location {
         let path = location.uri.isFileURL ? location.uri.path : location.uri.absoluteString
         print("    \(path):\(location.startLine)")
+        if let snippet = location.snippet {
+          printSnippet(snippet)
+        }
       } else if let documentURI = result.documentURI {
         let path = documentURI.isFileURL ? documentURI.path : documentURI.absoluteString
         print("    \(path)")
@@ -109,6 +116,27 @@ enum HumanReadablePrinter {
         line += " (README: \(readmePath))"
       }
       print(line)
+    }
+  }
+
+  private static func sourceLabel(for source: SymbolSearchSource) -> String? {
+    switch source.kind {
+    case .project:
+      return "project"
+    case .package:
+      if let name = source.packageName {
+        return "package:\(name)"
+      }
+      return "package"
+    case .other:
+      return nil
+    }
+  }
+
+  private static func printSnippet(_ snippet: String) {
+    let lines = snippet.split(separator: "\n", omittingEmptySubsequences: false)
+    for line in lines {
+      print("    \(line)")
     }
   }
 }

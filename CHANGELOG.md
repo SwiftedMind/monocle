@@ -43,3 +43,8 @@
 
 ### Enhanced
 ### Fixed
+## [Unreleased]
+
+### Added
+- **Symbol search ranking + source labels**: `monocle symbol` now prioritizes exact matches, labels results as project/package, and reduces noise from mangled/test-only symbols.
+- **Symbol search filters and context**: New flags `--exact`, `--scope`, `--prefer`, and `--context-lines` add exact matching, source filtering, ranking preference, and multi-line snippets.

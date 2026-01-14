@@ -139,6 +139,10 @@ Paste this block into your AGENTS guide so coding agents know how to use monocle
 - Search workspace symbols by name when you only know the identifier: `monocle symbol --query "TypeOrMember" --limit 5 --json`.
   - `--limit` caps the number of results (default 5).
   - `--enrich` fetches signature, documentation, and the precise definition location for each match.
+  - `--exact` returns only exact symbol name matches.
+  - `--scope project|package|all` limits results by source.
+  - `--prefer project|package|none` biases ranking.
+  - `--context-lines N` includes N lines of context around the definition (default 2).
 - Use `monocle` especially for symbols involved in errors/warnings or coming from external package dependencies.
 
 ```
@@ -187,6 +191,10 @@ Common options for symbol commands:
 - `--query <string>` – search term (required)
 - `--limit <int>` – cap results (default: 5)
 - `--enrich` – fetch signature, documentation, and precise location for each result
+- `--exact` – only return exact symbol name matches
+- `--scope project|package|all` – filter results by workspace vs package sources
+- `--prefer project|package|none` – bias ranking toward a source type
+- `--context-lines <int>` – include context lines around each definition (default: 2)
 
 ## Daemon mode
 
@@ -202,7 +210,7 @@ monocle serve --idle-timeout 600
 
 ## Output details
 
-Human-readable output prints the symbol name, kind, module, signature, definition path with range, and an optional snippet and documentation. JSON output mirrors the `SymbolInfo` structure used internally, making it convenient for tools and CI pipelines.
+Human-readable output prints the symbol name, kind, module, signature, definition path with range, and an optional snippet and documentation. For `monocle symbol`, results are ranked (exact matches first), labeled by source (`project` vs `package`), and include contextual snippets when `--context-lines` is set (default 2). JSON output mirrors the `SymbolInfo` structure used internally, making it convenient for tools and CI pipelines.
 
 ## Troubleshooting
 
