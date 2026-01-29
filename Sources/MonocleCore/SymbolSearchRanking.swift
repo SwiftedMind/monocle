@@ -222,16 +222,18 @@ public struct SymbolSearchRanker: Sendable {
     let standardizedPath = URL(fileURLWithPath: path).standardizedFileURL.path
     let isDerivedData = standardizedPath.contains("/DerivedData/")
 
-    if standardizedPath == workspaceRootPath || standardizedPath.hasPrefix("\(workspaceRootPath)/") {
-      return SymbolSearchSource(kind: .project, isDerivedData: isDerivedData)
-    }
-
+    // Check for package markers first, before workspace root check.
+    // This handles Tuist projects where packages live inside the workspace at Tuist/.build/checkouts/.
     if let packageName = packageName(from: standardizedPath) {
       return SymbolSearchSource(kind: .package, packageName: packageName, isDerivedData: isDerivedData)
     }
 
-    if standardizedPath.contains("/SourcePackages/") || standardizedPath.contains("/.build/") || isDerivedData {
+    if standardizedPath.contains("/SourcePackages/") || standardizedPath.contains("/.build/checkouts/") || isDerivedData {
       return SymbolSearchSource(kind: .package, isDerivedData: isDerivedData)
+    }
+
+    if standardizedPath == workspaceRootPath || standardizedPath.hasPrefix("\(workspaceRootPath)/") {
+      return SymbolSearchSource(kind: .project, isDerivedData: isDerivedData)
     }
 
     return SymbolSearchSource(kind: .other, isDerivedData: isDerivedData)

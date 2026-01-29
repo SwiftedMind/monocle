@@ -102,4 +102,32 @@ struct SymbolCommand: AsyncParsableCommand {
 
     print(output)
   }
+
+  /// Searches checked-out packages for a type definition.
+  ///
+  /// This is used as a fallback when SourceKit-LSP cannot resolve a symbol in the main workspace.
+  ///
+  /// - Parameters:
+  ///   - typeName: The type name to search for.
+  ///   - workspace: The workspace to search within.
+  /// - Returns: Matching symbol search results, filtered to type definitions.
+  static func searchPackagesForType(typeName: String, workspace: Workspace) async throws -> [SymbolSearchResult] {
+    var command = SymbolCommand()
+    command.query = typeName
+    command.limit = 5
+    command.enrich = true
+    command.exact = true
+    command.scope = .package
+    command.prefer = .package
+    command.contextLines = 2
+
+    let output = try await command.performSymbolSearch(workspace: workspace)
+
+    // Filter to type definitions only
+    let typeKinds: Set<String> = ["class", "struct", "enum", "protocol", "typealias"]
+    return output.results.filter { result in
+      guard let kind = result.kind else { return false }
+      return typeKinds.contains(kind)
+    }
+  }
 }

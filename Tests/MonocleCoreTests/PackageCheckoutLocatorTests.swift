@@ -137,6 +137,32 @@ final class PackageCheckoutLocatorTests {
     #expect(packages[0].checkoutPath.hasSuffix("/SourcePackages/checkouts/RemoteDependency"))
   }
 
+  @Test func tuistManagedWorkspaceUsesTuistCheckoutsDirectory() throws {
+    let fileManager = FileManager.default
+    let workspaceRoot = fileManager.temporaryDirectory
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? fileManager.removeItem(at: workspaceRoot) }
+
+    try fileManager.createDirectory(at: workspaceRoot, withIntermediateDirectories: true)
+
+    let tuistCheckoutsRoot = workspaceRoot.appendingPathComponent("Tuist/.build/checkouts", isDirectory: true)
+    let checkoutDirectory = tuistCheckoutsRoot.appendingPathComponent("TuistDependency", isDirectory: true)
+    try fileManager.createDirectory(at: checkoutDirectory, withIntermediateDirectories: true)
+    try "TuistDependency".write(
+      to: checkoutDirectory.appendingPathComponent("README.md"),
+      atomically: true,
+      encoding: .utf8,
+    )
+
+    let workspace = Workspace(rootPath: workspaceRoot.path, kind: .xcodeProject)
+    let packages = try PackageCheckoutLocator.checkedOutPackages(in: workspace)
+
+    #expect(packages.count == 1)
+    #expect(packages[0].packageName == "TuistDependency")
+    #expect(packages[0].checkoutPath.hasSuffix("/Tuist/.build/checkouts/TuistDependency"))
+    #expect(packages[0].readmePath?.hasSuffix("/Tuist/.build/checkouts/TuistDependency/README.md") == true)
+  }
+
   @Test func xcodeWorkspaceWithoutBuildServerThrowsHelpfulError() throws {
     let fileManager = FileManager.default
     let temporaryDirectory = fileManager.temporaryDirectory

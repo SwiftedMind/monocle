@@ -57,9 +57,31 @@ public enum PackageCheckoutLocator {
     case .swiftPackage:
       return URL(fileURLWithPath: workspace.rootPath).appendingPathComponent(".build/checkouts", isDirectory: true)
     case .xcodeProject, .xcodeWorkspace:
+      // Check for Tuist-managed dependencies first
+      if let tuistCheckoutsURL = tuistCheckoutsRootURL(inWorkspaceRoot: workspace.rootPath) {
+        return tuistCheckoutsURL
+      }
       let buildRootPath = try buildRootPath(fromWorkspaceRootPath: workspace.rootPath)
       return try xcodeCheckoutsRootURL(fromBuildRootPath: buildRootPath)
     }
+  }
+
+  /// Checks for Tuist-managed SwiftPM dependencies.
+  ///
+  /// Tuist stores dependencies at `<project-root>/Tuist/.build/checkouts/` instead of Xcode's DerivedData.
+  private static func tuistCheckoutsRootURL(inWorkspaceRoot workspaceRootPath: String) -> URL? {
+    let fileManager = FileManager.default
+    let tuistCheckoutsURL = URL(fileURLWithPath: workspaceRootPath)
+      .appendingPathComponent("Tuist/.build/checkouts", isDirectory: true)
+
+    var isDirectory: ObjCBool = false
+    guard fileManager.fileExists(atPath: tuistCheckoutsURL.path, isDirectory: &isDirectory),
+          isDirectory.boolValue
+    else {
+      return nil
+    }
+
+    return tuistCheckoutsURL
   }
 
   private static func buildRootPath(fromWorkspaceRootPath workspaceRootPath: String) throws -> String {
