@@ -1,3 +1,8 @@
+## [1.6.0]
+
+### Added
+- **Tuist-managed SwiftPM dependencies**: Monocle now discovers package checkouts at `Tuist/.build/checkouts` (Tuist projects), so package symbol lookups work the same as Xcode/DerivedData and pure SwiftPM workspaces. (Contributed by @Iron-Ham)
+
 ## [1.5.0]
 
 ### Added
