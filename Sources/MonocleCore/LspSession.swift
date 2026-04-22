@@ -352,7 +352,7 @@ public actor LspSession {
     switch workspace.kind {
     case .swiftPackage:
       (maxAttempts: 15, delayNanoseconds: 800_000_000) // SwiftPM often needs extra time to surface build settings
-    case .xcodeProject, .xcodeWorkspace:
+    case .xcodeProject, .xcodeWorkspace, .compilationDatabase:
       (maxAttempts: 5, delayNanoseconds: 350_000_000)
     }
   }

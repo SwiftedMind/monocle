@@ -38,6 +38,8 @@ public enum PackageCheckoutLocator {
   /// - Throws: `MonocleError.buildServerConfigurationMissing` when an Xcode workspace lacks `buildServer.json`.
   /// - Throws: `MonocleError.ioError` when the build server configuration cannot be read or decoded.
   public static func checkedOutPackages(in workspace: Workspace) throws -> [PackageCheckout] {
+    guard workspace.kind != .compilationDatabase else { return [] }
+
     let checkoutsRootURL = try checkoutsRootURL(for: workspace)
     let packageDirectories = listChildDirectories(at: checkoutsRootURL)
 
@@ -63,6 +65,8 @@ public enum PackageCheckoutLocator {
       }
       let buildRootPath = try buildRootPath(fromWorkspaceRootPath: workspace.rootPath)
       return try xcodeCheckoutsRootURL(fromBuildRootPath: buildRootPath)
+    case .compilationDatabase:
+      throw MonocleError.ioError("Compilation database workspaces do not have Swift package checkouts.")
     }
   }
 

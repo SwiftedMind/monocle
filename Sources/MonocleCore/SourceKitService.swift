@@ -198,6 +198,8 @@ public actor SourceKitService {
       } else {
         throw MonocleError.buildServerConfigurationMissing(workspaceRootPath: workspace.rootPath)
       }
+    case .compilationDatabase:
+      sourceKitArguments.append(contentsOf: ["--default-workspace-type", "compilationDatabase"])
     }
 
     var environment = ProcessInfo.processInfo.environment
@@ -241,7 +243,9 @@ public actor SourceKitService {
 
   /// Determines whether a non-SwiftPM workspace should prefer the build server protocol.
   private func shouldPreferBuildServer(for workspace: Workspace) -> Bool {
-    guard workspace.kind != .swiftPackage else { return false }
+    if workspace.kind == .swiftPackage || workspace.kind == .compilationDatabase {
+      return false
+    }
 
     let buildServerPath = URL(fileURLWithPath: workspace.rootPath).appendingPathComponent("buildServer.json")
     return FileManager.default.fileExists(atPath: buildServerPath.path)

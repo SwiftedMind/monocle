@@ -62,7 +62,7 @@ public enum XcodeSwiftPackageDependencyLocator {
       }
       return nil
 
-    case .swiftPackage:
+    case .swiftPackage, .compilationDatabase:
       return nil
     }
   }
