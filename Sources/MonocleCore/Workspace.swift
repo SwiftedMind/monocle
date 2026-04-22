@@ -12,6 +12,8 @@ public struct Workspace: Equatable, Hashable, Sendable, Codable {
     case xcodeProject
     /// An Xcode workspace contained in an `.xcworkspace` bundle.
     case xcodeWorkspace
+    /// A workspace using a compilation database (`compile_commands.json` or `compile_flags.txt`).
+    case compilationDatabase
   }
 
   /// Absolute path to the workspace root directory.

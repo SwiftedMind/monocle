@@ -31,6 +31,10 @@ public enum WorkspaceLocator {
         return Workspace(rootPath: currentURL.path, kind: .swiftPackage)
       }
 
+      if hasCompilationDatabase(in: currentURL, fileManager: fileManager) {
+        return Workspace(rootPath: currentURL.path, kind: .compilationDatabase)
+      }
+
       let parent = currentURL.deletingLastPathComponent()
       if parent.path == currentURL.path {
         throw MonocleError.workspaceNotFound
@@ -73,10 +77,17 @@ public enum WorkspaceLocator {
       if fileManager.fileExists(atPath: url.appendingPathComponent("Package.swift").path) {
         return Workspace(rootPath: url.path, kind: .swiftPackage)
       }
+      if hasCompilationDatabase(in: url, fileManager: fileManager) {
+        return Workspace(rootPath: url.path, kind: .compilationDatabase)
+      }
     }
 
     if fileManager.fileExists(atPath: url.appendingPathComponent("Package.swift").path) {
       return Workspace(rootPath: url.path, kind: .swiftPackage)
+    }
+
+    if hasCompilationDatabase(in: url, fileManager: fileManager) {
+      return Workspace(rootPath: url.path, kind: .compilationDatabase)
     }
 
     throw MonocleError.workspaceNotFound
@@ -166,5 +177,16 @@ public enum WorkspaceLocator {
     guard fileManager.fileExists(atPath: path, isDirectory: &isDirectory) else { return false }
 
     return isDirectory.boolValue
+  }
+
+  /// Checks whether a directory contains a compilation database or compile flags file.
+  ///
+  /// - Parameters:
+  ///   - directory: Directory to inspect.
+  ///   - fileManager: File manager used for the query.
+  /// - Returns: `true` when `compile_commands.json` or `compile_flags.txt` exists.
+  private static func hasCompilationDatabase(in directory: URL, fileManager: FileManager) -> Bool {
+    let candidates = ["compile_commands.json", "compile_flags.txt"]
+    return candidates.contains { fileManager.fileExists(atPath: directory.appendingPathComponent($0).path) }
   }
 }
