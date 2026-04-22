@@ -1,3 +1,8 @@
+## [Upcoming]
+
+### Fixed
+- **SourceKit-LSP launch arguments**: Removed deprecated `--build-path` that overrode `--scratch-path`, and stopped overriding the `HOME` environment variable for SwiftPM workspaces.
+
 ## [1.6.0]
 
 ### Added

@@ -205,7 +205,6 @@ public actor SourceKitService {
       environment["DEVELOPER_DIR"] = developerDirectory
     }
     if shouldUseSwiftPMBuildSystem {
-      environment["HOME"] = workspace.rootPath
       environment["SWIFTPM_CACHE_PATH"] = URL(fileURLWithPath: workspace.rootPath)
         .appendingPathComponent(".swiftpm-cache").path
     }
@@ -222,8 +221,6 @@ public actor SourceKitService {
     arguments.append(contentsOf: ["--default-workspace-type", "swiftPM"])
     let scratchPath = URL(fileURLWithPath: workspaceRootPath).appendingPathComponent(".sourcekit-lsp-scratch").path
     arguments.append(contentsOf: ["--scratch-path", scratchPath])
-    let buildPath = URL(fileURLWithPath: workspaceRootPath).appendingPathComponent(".build").path
-    arguments.append(contentsOf: ["--build-path", buildPath])
     arguments.append(contentsOf: ["--configuration", "debug"])
   }
 
