@@ -247,24 +247,42 @@ public actor SourceKitService {
     return FileManager.default.fileExists(atPath: buildServerPath.path)
   }
 
-  /// Attempts to query the SourceKit-LSP version by running `sourcekit-lsp --version`.
+  /// Attempts to detect the SourceKit-LSP version by querying the Swift toolchain version.
   ///
-  /// - Returns: Version string reported by the `sourcekit-lsp --version` invocation.
-  /// - Throws: `MonocleError.lspLaunchFailed` when the process exits with a non-zero status.
-  public static func detectSourceKitVersion() throws -> String {
+  /// Since `sourcekit-lsp --version` is no longer supported, this runs `swift --version`
+  /// and extracts a concise version string from the output.
+  ///
+  /// - Returns: A version string such as "Apple Swift version 6.3.1", or "unknown".
+  public static func detectSourceKitVersion() -> String {
     let process = Process()
     let pipe = Pipe()
     process.standardOutput = pipe
     process.standardError = Pipe()
     process.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
-    process.arguments = ["sourcekit-lsp", "--version"]
-    try process.run()
-    process.waitUntilExit()
+    process.arguments = ["swift", "--version"]
+    do {
+      try process.run()
+      process.waitUntilExit()
+    } catch {
+      return "unknown"
+    }
     guard process.terminationStatus == 0 else {
-      throw MonocleError.lspLaunchFailed("sourcekit-lsp --version returned non-zero exit code")
+      return "unknown"
     }
 
     let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    return String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "unknown"
+    let output = String(data: data, encoding: .utf8) ?? ""
+    let firstLine = output.split(separator: "\n").first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+    // Try to extract a concise version like "Apple Swift version 6.3.1"
+    if let range = firstLine.range(of: "Swift version ") {
+      let suffix = String(firstLine[range.upperBound...])
+      let components = suffix.split(separator: " ")
+      if let version = components.first {
+        return "Swift version \(version)"
+      }
+    }
+
+    return firstLine.isEmpty ? "unknown" : firstLine
   }
 }

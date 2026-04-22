@@ -7,7 +7,7 @@ import MonocleCore
 struct MonocleCommand: AsyncParsableCommand {
   /// Version string shown when invoking `monocle --version`.
   private static let versionDescription: String = {
-    let sourceKitVersion = (try? SourceKitService.detectSourceKitVersion()) ?? "unknown"
+    let sourceKitVersion = SourceKitService.detectSourceKitVersion()
     return "monocle \(toolVersion)\nSourceKit-LSP: \(sourceKitVersion)"
   }()
 

@@ -2,6 +2,7 @@
 
 ### Fixed
 - **SourceKit-LSP launch arguments**: Removed deprecated `--build-path` that overrode `--scratch-path`, and stopped overriding the `HOME` environment variable for SwiftPM workspaces.
+- **SourceKit-LSP version detection**: `monocle --version` now queries `swift --version` instead of the removed `sourcekit-lsp --version` flag.
 
 ## [1.6.0]
 
